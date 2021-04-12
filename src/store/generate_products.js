@@ -1,6 +1,6 @@
 import faker from 'faker';
 
-faker.seed(777);
+faker.seed(10);
 
 const products = [];
 
@@ -9,7 +9,7 @@ function generateProducts(){
         const productData = {
             id: faker.datatype.uuid(),
             name: faker.commerce.productName(),
-            image: faker.image.abstract(),
+            image: faker.random.image(),
             price: faker.commerce.price(),
             material: faker.commerce.productMaterial(),
             inStock: faker.datatype.boolean(),
