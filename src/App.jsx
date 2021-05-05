@@ -1,4 +1,9 @@
 import React, { useState, useReducer, useEffect } from 'react'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from 'react-router-dom';
 // import logo from './logo.svg'
 import './App.css'
 import products from './store/generate_products'
@@ -26,27 +31,33 @@ function App() {
   }
 
   // const [listOfProducts, setListOfProducts] = useState([])
-  const [activeTab, setActiveTab] = useState('ProductListing');
+  // const [activeTab, setActiveTab] = useState('ProductListing');
 
   const [state, dispatch] = useReducer(productReducer, initialState)
   const [userDataState, userDataDispatch] = useReducer(userDataReducer, userData)
 
 
-  function handleTabChange(tabname){
-    setActiveTab(tabname);
-  }
+  // function handleTabChange(tabname){
+  //   setActiveTab(tabname);
+  // }
 
   return (
     <StoreContext.Provider value={{dispatch, state}}>
       <userDataContext.Provider value={{userDataDispatch, userDataState}}>
         
         <main className="App textGray1">
-          <TheNavbar changeTab = {handleTabChange} activeTab={activeTab} ></TheNavbar>
+          <TheNavbar ></TheNavbar>
 
           <div className='app-content containerMid pb4 flexGrow'>
-            {activeTab == 'ProductListing' && <ProductListing  changeTab = {handleTabChange} />}
+            <Routes>
+              <Route path="/" element={<ProductListing  /> }/>
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/wishlist" element={<Wishlist />} />
+            </Routes>
+
+            {/* {activeTab == 'ProductListing' && <ProductListing  changeTab = {handleTabChange} />}
             {activeTab == 'Cart' && <Cart changeTab = {handleTabChange} />}
-            {activeTab == 'Wishlist' && <Wishlist changeTab = {handleTabChange} />}
+            {activeTab == 'Wishlist' && <Wishlist changeTab = {handleTabChange} />} */}
           </div>
 
           {/* footer */}
