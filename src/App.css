@@ -77,9 +77,15 @@ input:focus, button:focus{
   top: -0.6rem;
   right: 0.5rem;
 }
-/* .productlist{
-  margin-left: 260px;
-} */
+
+.product-card .image-wrapper{
+  height: 200px;
+}
+.product-card-image{
+  max-height: 180px;
+  width: auto;
+  max-width: 100%;
+}
 
 /* desktop only */
 @media(min-width: 768px){
@@ -110,5 +116,8 @@ input:focus, button:focus{
 @media (max-width: 767px) {
   .hiddenMobile{
     display: none;
+  }
+  .productlist{
+    grid-gap: 0.75rem;
   }
 }
