@@ -1,26 +1,52 @@
-import faker from 'faker';
+import axios from 'axios'
 
-faker.seed(10);
+let products = []
 
-const products = [];
+function fetchProducts(){
+    return axios.get('https://shop-wisp.herokuapp.com/products');
+}
 
-function generateProducts(){
-    for (let index = 0; index < 20; index++) {
-        const productData = {
-            id: faker.datatype.uuid(),
-            name: faker.commerce.productName(),
-            image: faker.random.image(),
-            price: faker.commerce.price(),
-            material: faker.commerce.productMaterial(),
-            inStock: faker.datatype.boolean(),
-            gst: faker.random.arrayElement([
-                'None','9%','12%'
-            ])
-        }
+async function getAllProducts(){
+    try{
+        console.count('call product API...')
+        const response = await fetchProducts()
+        console.log('response: ', response)
+        products = response.data.products
 
-        products.push(productData);
+        return products
+    }
+    catch(error){
+        console.log(error);
     }
 }
-generateProducts();
 
-export default products;
+// setProducts()
+
+export {getAllProducts, products};
+
+// import faker from 'faker';
+
+// faker.seed(10);
+
+// const products = [];
+
+// function generateProducts(){
+//     for (let index = 0; index < 20; index++) {
+//         const productData = {
+//             id: faker.datatype.uuid(),
+//             name: faker.commerce.productName(),
+//             image: faker.random.image(),
+//             price: faker.commerce.price(),
+//             material: faker.commerce.productMaterial(),
+//             inStock: faker.datatype.boolean(),
+//             gst: faker.random.arrayElement([
+//                 'None','9%','12%'
+//             ])
+//         }
+
+//         products.push(productData);
+//     }
+// }
+// generateProducts();
+
+// export default products;
