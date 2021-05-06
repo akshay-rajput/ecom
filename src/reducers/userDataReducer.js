@@ -31,20 +31,20 @@ export const userDataReducer = (userDataState, action) => {
             return {
                 ...userDataState,
                 cartItems: userDataState.cartItems.map((item) => {
-                    return item.id === product.id ? { ...item, qty: item.qty + 1 } : item;
+                    return item._id === product._id ? { ...item, qty: item.qty + 1 } : item;
                 })
             };
         case userActions.DEC_QTY:
             return {
                 ...userDataState,
                 cartItems: userDataState.cartItems.map((item) => {
-                    return item.id === product.id ? { ...item, qty: item.qty - 1 } : item;
+                    return item._id === product._id ? { ...item, qty: item.qty - 1 } : item;
                 })
             };
         case userActions.REMOVE_FROM_CART:
             return {
                 ...userDataState,
-                cartItems: userDataState.cartItems.filter((item) => item.id !== product.id)
+                cartItems: userDataState.cartItems.filter((item) => item._id !== product._id)
             };
         case userActions.ADD_TO_CART:
             return {
@@ -54,7 +54,7 @@ export const userDataReducer = (userDataState, action) => {
         case userActions.REMOVE_FROM_WISHLIST:
             return {
                 ...userDataState,
-                wishlist: userDataState.wishlist.filter((item) => item.id !== product.id)
+                wishlist: userDataState.wishlist.filter((item) => item._id !== product._id)
             };
         case userActions.ADD_TO_WISHLIST:
             return {
