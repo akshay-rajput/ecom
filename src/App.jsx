@@ -6,12 +6,13 @@ import {
 } from 'react-router-dom';
 // import logo from './logo.svg'
 import './App.css'
-import products from './store/generate_products'
+import { getAllProducts } from './store/generate_products'
 import TheNavbar from './components/TheNavbar'
 import TheFooter from './components/TheFooter'
-import ProductListing from './components/ProductListing'
-import Cart from './components/Cart'
-import Wishlist from './components/Wishlist'
+import ProductListing from './views/ProductListing'
+import Cart from './views/Cart'
+import Wishlist from './views/Wishlist'
+import ProductPage from './views/ProductPage'
 
 // import reducer
 import {StoreContext, actions, productReducer} from './reducers/productsReducer'
@@ -19,10 +20,13 @@ import {userDataContext, userActions, userDataReducer} from './reducers/userData
 
 function App() {
   const initialState = {
-    productList: [...products],
+    productList: [],
     sort_price: 'none',
-    show_all_products: true,
-    show_gstfree: false
+    productAppliedFilter: 'All'
+    // show_all_products: true,
+    // show_books: false,
+    // show_flashcards: false,
+    // show_toys: false,
   }
   const userData = {
     cartItems: [],
@@ -30,16 +34,38 @@ function App() {
     wishlist: []
   }
 
-  // const [listOfProducts, setListOfProducts] = useState([])
-  // const [activeTab, setActiveTab] = useState('ProductListing');
-
+  
   const [state, dispatch] = useReducer(productReducer, initialState)
   const [userDataState, userDataDispatch] = useReducer(userDataReducer, userData)
 
+  useEffect(() => {
+    let isCancelled = false;
 
-  // function handleTabChange(tabname){
-  //   setActiveTab(tabname);
-  // }
+    // only call api if productlist is empty
+    if(state.productList.length < 1){
+      console.log('productlist is empty...', state.productList.length);
+      // get all products
+      (async function getInitialProducts(){
+        try{
+          let products = await getAllProducts()
+          // console.log('app products: ', products)
+          
+          if(!isCancelled){
+            dispatch({type: 'initialise_products', payload: products})
+          }
+        }
+        catch(error){
+          console.log('Error - initial request - ', error)
+        }
+      })()
+
+      // cleanup function
+      return () => {
+        isCancelled = true;
+      };
+    }
+
+  }, [])
 
   return (
     <StoreContext.Provider value={{dispatch, state}}>
@@ -52,6 +78,7 @@ function App() {
             <Routes>
               <Route path="/" element={<ProductListing  /> }/>
               <Route path="/cart" element={<Cart />} />
+              <Route path="/product/:productId" element={<ProductPage />} />
               <Route path="/wishlist" element={<Wishlist />} />
             </Routes>
 
