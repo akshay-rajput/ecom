@@ -12,8 +12,14 @@ export default function ProductFilters({activeOption, isSidebarFilterSupported})
     function showAll(event){
         localDispatch(createAction(actions.SHOW_ALL_PRODUCTS, event.target.checked))
     }
-    function showGstFree(event){
-        localDispatch(createAction(actions.SHOW_GSTFREE, event.target.checked))
+    function showBooks(event){
+        localDispatch(createAction(actions.SHOW_BOOKS, event.target.checked))
+    }
+    function showFlashcards(event){
+        localDispatch(createAction(actions.SHOW_FLASHCARDS, event.target.checked))
+    }
+    function showToys(event){
+        localDispatch(createAction(actions.SHOW_TOYS, event.target.checked))
     }
     function sortPrice(option){
         localDispatch(createAction(actions.SORT_PRICE, option))
@@ -28,12 +34,20 @@ export default function ProductFilters({activeOption, isSidebarFilterSupported})
                     { isSidebarFilterSupported?'Filters':''}
                     <div className="actions displayFlex flexCol mt2 mb2">
                         <div className="displayFlex itemsCenter pt1 pb1">
-                            <input onChange={showAll} defaultChecked={state.show_all_products} type="checkbox" className='mr1' name="outOfStock" id="outOfStock"/>
-                            <label htmlFor="outOfStock">Out of stock</label>
+                            <input onChange={showAll} defaultChecked={state.productAppliedFilter == 'All'} type="radio" className='mr1' name="product_filter" id="all"/>
+                            <label htmlFor="all">All Products</label>
                         </div>
                         <div className="displayFlex itemsCenter pt1 pb1">
-                            <input onChange={showGstFree} defaultChecked={state.show_gstfree} type="checkbox" className='mr1' name="gstfree" id="gstfree"/>
-                            <label htmlFor="gstfree">Tax free</label>
+                            <input onChange={showBooks} defaultChecked={state.productAppliedFilter == 'Books'} type="radio" className='mr1' name="product_filter" id="books"/>
+                            <label htmlFor="books">Books</label>
+                        </div>
+                        <div className="displayFlex itemsCenter pt1 pb1">
+                            <input onChange={showFlashcards} defaultChecked={state.productAppliedFilter == "Flashcards"} type="radio" className='mr1' name="product_filter" id="flashcards"/>
+                            <label htmlFor="flashcards">Flash cards</label>
+                        </div>
+                        <div className="displayFlex itemsCenter pt1 pb1">
+                            <input onChange={showToys} defaultChecked={state.productAppliedFilter == 'Toys'} type="radio" className='mr1' name="product_filter" id="toys"/>
+                            <label htmlFor="toys">Toys & Games</label>
                         </div>
                         
                     </div>
