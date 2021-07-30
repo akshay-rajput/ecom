@@ -56,13 +56,14 @@ export default function Cart({changeTab}) {
                             state.cartItems.map(product => {
                             return (
                                 <div key={product._id} className='displayGrid gridCols12 border borderTeal5 rounded mb2'>
-                                    <div className='image-wrapper gridColSpan3'>
-                                        <img src={product.images} alt={product.name} className="wFull rounded mb2"/>
+                                    <div className='cart-item-imagewrapper gridColSpan3 displayFlex justifyCenter itemsCenter'>
+                                        <img src={product.images} alt={product.name} className="cart-item-image rounded"/>
                                     </div>
                                     <div className="product-details gridColSpan9 displayFlex flexCol p2">
                                         <div className="product-info flexGrow">
                                             <div className="displayFlex mb2 justifyBetween itemsCenter flexWrap">
-                                                <label className='mb1'>{product.name}</label>
+                                                {/* <label className='mb1'>{product.name}</label> */}
+                                                <Link to={`/product/${product._id}`} className="textWhite hover:textTeal4 mb2">{product.name}</Link>
                                                 <span className="mb1 textSm fontSemiBold">$ {product.price}</span>
                                             </div>
 
@@ -122,8 +123,8 @@ export default function Cart({changeTab}) {
                                 {
                                     state.cartItems.map(item => {
                                         return(
-                                            <div key={item.id} className="cart-item displayGrid gridCols12 mb3">
-                                                <span className="gridColSpan6">{item.name} 3</span>
+                                            <div key={item._id} className="cart-item displayGrid gridCols12 mb3">
+                                                <span className="gridColSpan6">{item.name}</span>
                                                 <span className="gridColSpan3 textRight"> x {item.qty}</span>
                                                 <span className="gridColSpan3 textRight">$ {item.price * item.qty}</span>
                                             </div>
