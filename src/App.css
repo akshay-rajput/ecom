@@ -19,7 +19,7 @@ html{
   background-color: #282c34;
   box-shadow: 2px 2px 5px #1e2229;
 }
-.app-navbar .active{
+.app-navbar .active-link{
   border-bottom: 1px solid teal;
 }
 .app-navbar .btn-cart{
@@ -78,10 +78,12 @@ input:focus, button:focus{
   right: 0.5rem;
 }
 
-.product-card .image-wrapper{
+.product-card .image-wrapper,
+.cart-item-imagewrapper{
   height: 200px;
 }
-.product-card-image{
+.product-card-image,
+.cart-item-image{
   max-height: 180px;
   width: auto;
   max-width: 100%;
