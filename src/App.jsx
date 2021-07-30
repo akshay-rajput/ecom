@@ -13,6 +13,7 @@ import ProductListing from './views/ProductListing'
 import Cart from './views/Cart'
 import Wishlist from './views/Wishlist'
 import ProductPage from './views/ProductPage'
+import NotFound from './views/NotFound'
 
 // import reducer
 import {StoreContext, actions, productReducer} from './reducers/productsReducer'
@@ -76,10 +77,11 @@ function App() {
 
           <div className='app-content containerMid pb4 flexGrow'>
             <Routes>
-              <Route path="/" element={<ProductListing  /> }/>
+              <Route exact path="/" element={<ProductListing  /> }/>
               <Route path="/cart" element={<Cart />} />
               <Route path="/product/:productId" element={<ProductPage />} />
               <Route path="/wishlist" element={<Wishlist />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
 
             {/* {activeTab == 'ProductListing' && <ProductListing  changeTab = {handleTabChange} />}
