@@ -65,7 +65,7 @@ export const userDataReducer = (userDataState, action) => {
             return {
                 ...userDataState,
                 cartTotal: userDataState.cartItems.reduce(function (total, currentItem) {
-                    console.log('finding total...', currentItem.name)
+                    // console.log('finding total...', total + (currentItem.price * currentItem.qty))
                     return total + (currentItem.price * currentItem.qty)
                   }, 0)
             };

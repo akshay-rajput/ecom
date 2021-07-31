@@ -11,7 +11,7 @@ export default function ProductCard({product, changeTab}) {
     
     
     function addToCart(item){
-        console.log('dispatched add to cart with ', item);
+        // console.log('dispatched add to cart with ', JSON.stringify(item, null, 4));
         if(!checkExistanceInArray(userDataState.cartItems, item._id)){
             item.qty = 1;
             userDataDispatch(createUserAction(userActions.ADD_TO_CART, item))
