@@ -1,8 +1,10 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import emptycart from '../assets/empty.svg';
 import { Link } from 'react-router-dom';
 import {checkExistanceInArray} from '../store/checkExistanceInArray'
-import {userActions, createUserAction, userDataContext} from '../reducers/userDataReducer'
+import {userActions, createUserAction, userDataContext} from '../reducers/userDataReducer';
+import Spinner from '../components/Spinner';
+import displayRazorpay from '../paymentGateway';
 
 export default function Cart({changeTab}) {
     // access state and dispatch
@@ -10,18 +12,19 @@ export default function Cart({changeTab}) {
     const state = store.userDataState
     const localDispatch = store.userDataDispatch
     
-    useEffect(() => {
-        console.log('useEffect --> state cart: ', state.cartItems)
-    }, [])
+    const [isCheckingOut, setIsCheckingOut] = useState(false);
+    // useEffect(() => {
+    //     console.log('useEffect --> state cart: ', state.cartItems)
+    // }, [])
 
     function addToWishlist(item){
         if(checkExistanceInArray(state.wishlist, item._id)){
             localDispatch(createUserAction(userActions.REMOVE_FROM_WISHLIST, item))
-            console.log('removing from wishlist..')
+            // console.log('removing from wishlist..')
         }
         else{
             localDispatch(createUserAction(userActions.ADD_TO_WISHLIST, item))
-            console.log("adding to wishlist...");
+            // console.log("adding to wishlist...");
         }
     }
 
@@ -41,6 +44,31 @@ export default function Cart({changeTab}) {
             localDispatch(createUserAction(userActions.DEC_QTY, product))
             localDispatch(createUserAction(userActions.FIND_CARTTOTAL))
         }
+    }
+
+    async function initCheckout(){
+        setIsCheckingOut(true);
+
+        let checkoutData = {
+            items: [],
+            total: 0
+        };
+        // console.log('initiate checkout..', state.cartItems);
+        state.cartItems.forEach((item) => {
+            let itemdata = {}
+            itemdata.name = item.name;
+            itemdata.price = item.price;
+            itemdata.quantity = item.qty;
+
+            checkoutData.items.push(itemdata);
+        });
+
+        checkoutData.total = state.cartTotal;
+        // console.log('chekoutd: ', checkoutData);
+
+        await displayRazorpay(checkoutData);
+
+        setIsCheckingOut(false);
     }
 
     return (
@@ -139,6 +167,18 @@ export default function Cart({changeTab}) {
                             </div>
                         </div>
                         
+                        <button onClick={()=> initCheckout()} 
+                                className="pt2 pb2 displayBlock wFull rounded textRg fontSemiBold textTeal1 bgTeal6 hover:bgTeal5 mt1">
+                                Checkout &nbsp;
+                                {
+                                    isCheckingOut &&
+                                    <Spinner />
+                                }
+                        </button>
+
+                        <small className="textXs textGray3 mt2 lineHeightSm displayBlock">
+                            Use credit card as mode of payment and (4111 1111 1111 1111) as card number.
+                        </small>
                     </div>
                 </div>
                     
