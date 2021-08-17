@@ -27,7 +27,7 @@ async function displayRazorpay(checkoutData) {
         }
 
         // creating a new order
-        const result = await axios.post("http://shop-wisp.herokuapp.com/payments", checkoutData);
+        const result = await axios.post("https://shop-wisp.herokuapp.com/payments", checkoutData);
         console.log('result of payment: ', result);
         if (!result) {
             alert("Server error. Are you online?");
@@ -52,7 +52,7 @@ async function displayRazorpay(checkoutData) {
                     razorpaySignature: response.razorpay_signature,
                 };
 
-                const result = await axios.post("http://shop-wisp.herokuapp.com/payments/success", data);
+                const result = await axios.post("https://shop-wisp.herokuapp.com/payments/success", data);
 
                 // console.log('result of paymentverify: ', result);
 
