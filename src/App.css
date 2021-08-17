@@ -89,6 +89,24 @@ input:focus, button:focus{
   max-width: 100%;
 }
 
+.spinner{
+  position: absolute;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  border: 2px solid teal;
+  border-top-color: rgb(4, 73, 73);
+  animation: rotating 2s linear infinite;
+}
+@keyframes rotating {
+  from{
+      transform: rotate(0deg);
+  }
+  to{
+      transform: rotate(360deg);
+  }
+}
+
 /* desktop only */
 @media(min-width: 768px){
   .filter-sidebar{

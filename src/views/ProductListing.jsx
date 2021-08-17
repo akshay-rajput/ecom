@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react'
-import { Routes, Route, Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard'
 import ProductFilters from '../components/ProductFilters'
+import Spinner from '../components/Spinner';
 
 // state
 import {actions, createAction, StoreContext} from '../reducers/productsReducer'
@@ -126,8 +126,8 @@ export default function ProductListing({changeTab}) {
             </div>
             {
                 generateProductList().length < 1 && 
-                <div className="">
-                    There are no products available here..
+                <div className="displayFlex justifyCenter pt8">
+                    <Spinner />
                 </div>
             }
         </div>
