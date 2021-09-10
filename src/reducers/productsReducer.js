@@ -22,7 +22,7 @@ export const createAction = (type, payload)=> {
 
 // reducer function which accepts state and action
 export const productReducer = (state, action) => {
-    console.log("called productReducer: Action - ", action.payload)
+    // console.log("called productReducer: Action - ", action.payload)
     switch (action.type) {
         case actions.INITIALISE_PRODUCTS:
             return {

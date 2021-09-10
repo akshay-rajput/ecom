@@ -10,7 +10,7 @@ async function getAllProducts(){
     try{
         console.count('call product API...')
         const response = await fetchProducts()
-        console.log('response: ', response)
+        // console.log('response: ', response)
         products = response.data.products
 
         return products
