@@ -7,6 +7,7 @@ export const userActions = {
     ADD_TO_CART: 'add_to_cart',
     ADD_TO_WISHLIST: 'add_to_wishlist',
     REMOVE_FROM_CART: 'remove_from_cart',
+    CLEAR_CART: 'clear_cart',
     REMOVE_FROM_WISHLIST: 'remove_from_wishlist',
     INC_QTY: 'increase_quantity',
     DEC_QTY: 'decrease_quantity',
@@ -45,6 +46,11 @@ export const userDataReducer = (userDataState, action) => {
             return {
                 ...userDataState,
                 cartItems: userDataState.cartItems.filter((item) => item._id !== product._id)
+            };
+        case userActions.CLEAR_CART:
+            return {
+                ...userDataState,
+                cartItems: []
             };
         case userActions.ADD_TO_CART:
             return {
