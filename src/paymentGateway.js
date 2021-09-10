@@ -28,7 +28,7 @@ async function displayRazorpay(checkoutData) {
 
         // creating a new order
         const result = await axios.post("https://shop-wisp.herokuapp.com/payments", checkoutData);
-        console.log('result of payment: ', result);
+        // console.log('result of payment: ', result);
         if (!result) {
             alert("Server error. Are you online?");
             return;
