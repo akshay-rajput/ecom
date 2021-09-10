@@ -1,6 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react'
 import emptycart from '../assets/empty.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {checkExistanceInArray} from '../store/checkExistanceInArray'
 import {userActions, createUserAction, userDataContext} from '../reducers/userDataReducer';
 import Spinner from '../components/Spinner';
@@ -16,6 +16,7 @@ export default function Cart({changeTab}) {
     // useEffect(() => {
     //     console.log('useEffect --> state cart: ', state.cartItems)
     // }, [])
+    let navigate = useNavigate();
 
     function addToWishlist(item){
         if(checkExistanceInArray(state.wishlist, item._id)){
@@ -49,26 +50,35 @@ export default function Cart({changeTab}) {
     async function initCheckout(){
         setIsCheckingOut(true);
 
-        let checkoutData = {
-            items: [],
-            total: 0
-        };
-        // console.log('initiate checkout..', state.cartItems);
-        state.cartItems.forEach((item) => {
-            let itemdata = {}
-            itemdata.name = item.name;
-            itemdata.price = item.price;
-            itemdata.quantity = item.qty;
+        try{
+            let checkoutData = {
+                items: [],
+                total: 0
+            };
+            // console.log('initiate checkout..', state.cartItems);
+            state.cartItems.forEach((item) => {
+                let itemdata = {}
+                itemdata.name = item.name;
+                itemdata.price = item.price;
+                itemdata.quantity = item.qty;
 
-            checkoutData.items.push(itemdata);
-        });
+                checkoutData.items.push(itemdata);
+            });
 
-        checkoutData.total = state.cartTotal;
-        // console.log('chekoutd: ', checkoutData);
+            checkoutData.total = state.cartTotal;
+            // console.log('chekoutd: ', checkoutData);
 
-        await displayRazorpay(checkoutData);
+            await displayRazorpay(checkoutData);
 
-        setIsCheckingOut(false);
+            setIsCheckingOut(false);
+
+            // clear the cart & go to homepage
+            localDispatch(createUserAction(userActions.CLEAR_CART));
+            navigate("/");
+        }
+        catch(error){
+            console.log("error: ", error.message);
+        }
     }
 
     return (
